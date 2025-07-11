@@ -2,9 +2,9 @@
 <html lang="ku">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>قیبلە نما</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>➠ قیبلە نما</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -14,7 +14,7 @@
 
     body {
       font-family: 'Amiri', serif;
-      background: linear-gradient(135deg, #240046, #5a189a, #3c096c);
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
       min-height: 100vh;
       display: flex;
@@ -28,10 +28,10 @@
     }
 
     h1 {
-      font-size: 2.3em;
+      font-size: 2.5em;
       margin-top: 20px;
-      color: #ffebfb;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+      color: #e0aaff;
+      text-shadow: 2px 2px 6px #000;
     }
 
     #compass {
@@ -40,63 +40,63 @@
       max-width: 320px;
       height: 80vw;
       max-height: 320px;
-      border: 10px solid #ffffffaa;
+      border: 10px solid #ffffff55;
       border-radius: 50%;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
       position: relative;
-      box-shadow: 0 0 20px rgba(255,255,255,0.25);
+      box-shadow: 0 0 30px rgba(255,255,255,0.25);
+      backdrop-filter: blur(4px);
     }
 
     #needle {
-      width: 4px;
-      height: 40%;
-      background: #ff006e;
       position: absolute;
       top: 10%;
       left: 50%;
       transform-origin: bottom center;
       transform: rotate(0deg);
       transition: transform 0.5s ease-in-out;
-      box-shadow: 0 0 8px #ff006e;
+      font-size: 2.4em;
+      color: #ff007f;
+      text-shadow: 0 0 12px #ff007f, 0 0 20px #ff80b3;
     }
 
     #text {
-      font-size: 1.2em;
-      color: #ffe2f6;
+      font-size: 1.3em;
+      color: #ffd6f6;
       margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
     }
 
     footer {
-      font-size: 1.3em;
+      font-size: 1.4em;
       font-family: 'Amiri', serif;
       font-weight: bold;
-      color: #fff;
-      margin-bottom: 10px;
-      text-shadow: 1px 1px 3px black;
+      color: #ffffff;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 5px #000;
     }
 
-    /* شێوەسازی شاز */
+    /* شێوەی نرمی glow */
     .glow-circle {
       position: absolute;
-      width: 400px;
-      height: 400px;
+      width: 450px;
+      height: 450px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffb3ec33, #ffffff00);
+      background: radial-gradient(circle, #a685e2aa, #ffffff00);
       top: 30%;
-      left: -100px;
+      left: -120px;
       z-index: 0;
       filter: blur(100px);
     }
 
     .glow-circle2 {
       position: absolute;
-      width: 300px;
-      height: 300px;
+      width: 350px;
+      height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, #90e0ef33, #ffffff00);
+      background: radial-gradient(circle, #a0e7e5aa, #ffffff00);
       bottom: 20%;
-      right: -100px;
+      right: -110px;
       z-index: 0;
       filter: blur(100px);
     }
@@ -107,15 +107,15 @@
   <div class="glow-circle"></div>
   <div class="glow-circle2"></div>
 
-  <h1>قیبلە نمای نوێژ</h1>
+  <h1>➠ قیبلە نمای نوێژ</h1>
 
   <div id="compass">
-    <div id="needle"></div>
+    <div id="needle">➠</div>
   </div>
 
-  <div id="text">تکایە چاوەڕوان بە... دۆزینی شوێنی قیبلە</div>
+  <div id="text">➠ تکایە چاوەڕوان بە... دۆزینی شوێنی قیبلە</div>
 
-  <footer>ئاکام ئەبراھیم</footer>
+  <footer>ئاکام ابراھیم</footer>
 
   <script>
     const needle = document.getElementById("needle");
@@ -139,9 +139,9 @@
         let bearing = (θ * 180 / Math.PI + 360) % 360;
 
         needle.style.transform = `rotate(${bearing}deg)`;
-        text.innerText = `ئەمە ڕووناکی قیبلەیە... شوێنی نوێژت ئەوەیە 🕋`;
+        text.innerText = `➠ ئەمە ڕووناکی قیبلەیە... شوێنی نوێژت ئەوەیە 🕋`;
       }, () => {
-        text.innerText = "نەتوانرا شوێنت بدۆزرێتەوە 😕";
+        text.innerText = "😕 نەتوانرا شوێنت بدۆزرێتەوە";
       });
     } else {
       text.innerText = "براوزەرەکەت پشتگیری شوێن ناکات.";
