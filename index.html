@@ -3,148 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>➠ قیبلە نما</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <title>قیبلە نما</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
+      margin: 0;
       font-family: 'Amiri', serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      min-height: 100vh;
+      background: #fefefe;
+      color: #222;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
-      padding: 25px 15px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     h1 {
-      font-size: 2.5em;
-      margin-top: 20px;
-      color: #e0aaff;
-      text-shadow: 2px 2px 6px #000;
+      font-size: 1.8em;
+      color: #198754;
+      margin: 10px 0;
     }
 
     #compass {
-      margin: 40px 0;
-      width: 80vw;
-      max-width: 320px;
-      height: 80vw;
-      max-height: 320px;
-      border: 10px solid #ffffff55;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
       position: relative;
-      box-shadow: 0 0 30px rgba(255,255,255,0.25);
-      backdrop-filter: blur(4px);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: #111;
+      border: 6px solid #ccc;
+      margin: 30px 0;
     }
 
     #needle {
       position: absolute;
-      top: 10%;
+      top: 50%;
       left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 80px solid #ffc107;
       transform-origin: bottom center;
-      transform: rotate(0deg);
-      transition: transform 0.5s ease-in-out;
-      font-size: 2.4em;
-      color: #ff007f;
-      text-shadow: 0 0 12px #ff007f, 0 0 20px #ff80b3;
+      transform: translate(-50%, -100%) rotate(0deg);
     }
 
-    #text {
-      font-size: 1.3em;
-      color: #ffd6f6;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    #kaaba {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kaaba_icon.svg/1024px-Kaaba_icon.svg.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -140%);
+    }
+
+    #info {
+      font-size: 1.1em;
+      margin-top: 10px;
     }
 
     footer {
-      font-size: 1.4em;
-      font-family: 'Amiri', serif;
       font-weight: bold;
-      color: #ffffff;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 5px #000;
-    }
-
-    /* شێوەی نرمی glow */
-    .glow-circle {
-      position: absolute;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #a685e2aa, #ffffff00);
-      top: 30%;
-      left: -120px;
-      z-index: 0;
-      filter: blur(100px);
-    }
-
-    .glow-circle2 {
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #a0e7e5aa, #ffffff00);
-      bottom: 20%;
-      right: -110px;
-      z-index: 0;
-      filter: blur(100px);
+      margin-top: 40px;
+      color: #555;
     }
   </style>
 </head>
 <body>
 
-  <div class="glow-circle"></div>
-  <div class="glow-circle2"></div>
-
-  <h1>➠ قیبلە نمای نوێژ</h1>
-
+  <h1>➠ قیبلە نما</h1>
   <div id="compass">
-    <div id="needle">➠</div>
+    <div id="needle"></div>
+    <div id="kaaba"></div>
   </div>
+  <div id="info">دەتبینرێت... چاوەڕوان بە لۆکەیشن</div>
 
-  <div id="text">➠ تکایە چاوەڕوان بە... دۆزینی شوێنی قیبلە</div>
-
-  <footer>ئاکام ابراھیم</footer>
+  <footer>ئاکام ئەبراھیم</footer>
 
   <script>
-    const needle = document.getElementById("needle");
-    const text = document.getElementById("text");
+    let qiblaAngle = 0;
 
-    const φK = 21.4225 * Math.PI / 180;
-    const λK = 39.8262 * Math.PI / 180;
+    function updateNeedle(alpha) {
+      const needle = document.getElementById('needle');
+      needle.style.transform = `translate(-50%, -100%) rotate(${alpha - qiblaAngle}deg)`;
+    }
+
+    function calculateQibla(lat, lon) {
+      const kaabaLat = 21.4225 * Math.PI / 180;
+      const kaabaLon = 39.8262 * Math.PI / 180;
+
+      const userLat = lat * Math.PI / 180;
+      const userLon = lon * Math.PI / 180;
+
+      const deltaLon = kaabaLon - userLon;
+      const y = Math.sin(deltaLon);
+      const x = Math.cos(userLat) * Math.tan(kaabaLat) - Math.sin(userLat) * Math.cos(deltaLon);
+      const bearing = Math.atan2(y, x);
+      qiblaAngle = (bearing * 180 / Math.PI + 360) % 360;
+    }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        const φ = lat * Math.PI / 180;
-        const λ = lon * Math.PI / 180;
-
-        const θ = Math.atan2(Math.sin(λK - λ),
-              Math.cos(φ) * Math.tan(φK) -
-              Math.sin(φ) * Math.cos(λK - λ));
-
-        let bearing = (θ * 180 / Math.PI + 360) % 360;
-
-        needle.style.transform = `rotate(${bearing}deg)`;
-        text.innerText = `➠ ئەمە ڕووناکی قیبلەیە... شوێنی نوێژت ئەوەیە 🕋`;
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        calculateQibla(lat, lon);
+        document.getElementById('info').innerText = `شوێنی قیبلەی تۆ: ${Math.round(qiblaAngle)}°`;
       }, () => {
-        text.innerText = "😕 نەتوانرا شوێنت بدۆزرێتەوە";
+        document.getElementById('info').innerText = "نەتوانرا شوێن بدۆزرێتەوە.";
       });
-    } else {
-      text.innerText = "براوزەرەکەت پشتگیری شوێن ناکات.";
+    }
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+      window.addEventListener('deviceorientation', handleOrientation, true);
+    }
+
+    function handleOrientation(event) {
+      const alpha = event.alpha;
+      if (alpha !== null) {
+        updateNeedle(alpha);
+      }
     }
   </script>
 
